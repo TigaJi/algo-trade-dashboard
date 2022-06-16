@@ -44,8 +44,8 @@ def realtime_dashboard(portfolio_value, transactions):
             st.markdown("### Basket")
 
             basket_df = transactions.groupby(['yahoo_ticker'])[['total_shares_held']].last().reset_index()
-            basket_df = basket_df.loc[basket_df['total_shares_held'] > 0]
-            box1.dataframe(basket_df, width = 350)
+            basket_df_1 = basket_df.loc[basket_df['total_shares_held'] > 0]
+            box1.dataframe(basket_df_1, width = 350)
         with box2:
             st.markdown("### Transactions")
             box2.table(transactions[['date','action','company','num_shares','total_usd']].tail(5).astype(str))
