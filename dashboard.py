@@ -8,7 +8,6 @@ from backtest import backtest_dashboard
 from realtime import realtime_dashboard
 from datapath import *
 import boto3
-import s3fs
 from io import StringIO
 
 
