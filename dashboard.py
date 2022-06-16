@@ -26,6 +26,7 @@ with st.sidebar:
 
 #real time dashboard
 if selected == "Real-Time":
+    st.write(transaction_data_path,portfolio_value_path)
     realtime_dashboard(transaction_data_path,portfolio_value_path)
 
 #backtest dashboard
