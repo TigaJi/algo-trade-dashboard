@@ -36,7 +36,7 @@ def realtime_dashboard(portfolio_value, transactions):
 
 
         st.markdown("### Portfolio " + graph_filter)
-        fig = px.line(portfolio_value.iloc[-20:],x = 'dt', y=graph_filter)
+        fig = px.line(portfolio_value.iloc[-30:],x = 'dt', y=graph_filter)
         st.plotly_chart(fig, use_container_width=True)
 
         box1,box2 = st.columns(2)
