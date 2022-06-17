@@ -30,13 +30,13 @@ def realtime_dashboard(portfolio_value, transactions):
 
         m1, m2, m3 = st.columns(3)
 
-        m1.metric(label="Daily Return", value=day_return)
-        m2.metric(label="Weekly Return", value=week_return)
-        m3.metric(label="Monthly Return", value=month_return)
+        m1.metric(label="Daily Return", value=round(day_return,4))
+        m2.metric(label="Weekly Return", value=round(week_return,4))
+        m3.metric(label="Monthly Return", value=round(month_return,4))
 
 
         st.markdown("### Portfolio " + graph_filter)
-        fig = px.line(portfolio_value, y=graph_filter)
+        fig = px.line(portfolio_value[-100:],x = 'dt', y=graph_filter)
         st.plotly_chart(fig, use_container_width=True)
 
         box1,box2 = st.columns(2)
