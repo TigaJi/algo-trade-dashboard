@@ -11,7 +11,7 @@ import plotly.express as px
 def realtime_dashboard(portfolio_value, transactions):
     #Page title
     st.markdown("<h1 style='text-align: center;'>Real Time Results</h1>", unsafe_allow_html=True)
-    st.text("Last updated: "+portfolio_value['dt'].iloc[-1])
+    st.text("Last updated: "+transactions['dt'].iloc[-1])
     graph_filter = st.selectbox("Select Graph",['value','return'])
     
 
@@ -23,16 +23,16 @@ def realtime_dashboard(portfolio_value, transactions):
 
     day_return =  portfolio_value['daily_return'].iloc[-1]
     week_return =  portfolio_value['weekly_return'].iloc[-1]
-    month_return =  portfolio_value['monthly_return'].iloc[-2]
+    month_return =  portfolio_value['monthly_return'].iloc[-1]
 
         
     with placeholder.container():
 
         m1, m2, m3 = st.columns(3)
 
-        m1.metric(label="Daily Return", value=str(day_return*100)+"%")
-        m2.metric(label="Weekly Return", value=str(week_return*100)+"%")
-        m3.metric(label="Monthly Return", value=str(month_return*100)+"%")
+        m1.metric(label="Daily Return", value=day_return)
+        m2.metric(label="Weekly Return", value=week_return)
+        m3.metric(label="Monthly Return", value=month_return)
 
 
         st.markdown("### Portfolio " + graph_filter)
