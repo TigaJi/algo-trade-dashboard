@@ -34,7 +34,6 @@ with st.sidebar:
 
 #real time dashboard
 if selected == "Real-Time":
-    while True:
         transaction_obj = client.get_object(Bucket=bucket_name, Key='trading-dashboard-data/purchase_info.csv')
         transaction_body = transaction_obj['Body']
         transaction_csv_string = transaction_body.read().decode('utf-8')
