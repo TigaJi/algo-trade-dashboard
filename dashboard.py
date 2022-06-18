@@ -47,7 +47,7 @@ if selected == "Real-Time":
         portfolio_return = pd.read_csv(StringIO(portfolio_csv_string))
         print(portfolio_return.columns)
         realtime_dashboard(portfolio_return,transaction_data)
-        time.sleep(10)
+        time.sleep(60)
 
 #backtest dashboard
 if selected == "Backtesting":
