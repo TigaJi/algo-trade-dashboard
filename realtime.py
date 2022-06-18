@@ -14,6 +14,14 @@ def realtime_dashboard(portfolio_value, transactions):
     st.text("Last update on: "+transactions['date'].iloc[-1])
     graph_filter = st.selectbox("Select Graph",['profit_sum','return'])
     
+    #hide index
+    hide_table_row_index = """
+            <style>
+            tbody th {display:none}
+            .blank {display:none}
+            </style>
+            """
+    st.markdown(hide_table_row_index, unsafe_allow_html=True)
 
     #single element container
     placeholder = st.empty()
@@ -42,8 +50,12 @@ def realtime_dashboard(portfolio_value, transactions):
 
             basket_df = transactions.groupby(['yahoo_ticker'])[['total_shares_held']].last().reset_index()
             basket_df_1 = basket_df.loc[basket_df['total_shares_held'] > 0]
-            box1.dataframe(basket_df_1, width = 350)
+            basket_df_1['total_shares_held'] = basket_df_1['total_shares_held'].astype(int)
+            box1.table(basket_df_1)
+
         with box2:
             st.markdown("### Transactions")
+            transactions['total_usd'] = transactions['total_usd'].round(2)
+            transactions['num_shares'] = transactions['num_shares'].astype(int)
             box2.table(transactions[['date','action','company','num_shares','total_usd']].tail(5).astype(str))
         
