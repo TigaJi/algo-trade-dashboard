@@ -18,6 +18,7 @@ bucket_name = 'research-dashboard'
 
 #page config
 st.set_page_config(
+    page_title='Trading Dashboard',
     layout = 'wide'
     )
 

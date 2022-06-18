@@ -11,7 +11,7 @@ import plotly.express as px
 def realtime_dashboard(portfolio_value, transactions):
     #Page title
     st.markdown("<h1 style='text-align: center;'>Real Time Results</h1>", unsafe_allow_html=True)
-    st.text("Last updated: "+transactions['date'].iloc[-1])
+    st.text("Last update on: "+transactions['date'].iloc[-1])
     graph_filter = st.selectbox("Select Graph",['profit_sum','return'])
     
 
