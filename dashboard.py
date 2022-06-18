@@ -34,19 +34,19 @@ with st.sidebar:
 
 #real time dashboard
 if selected == "Real-Time":
-        transaction_obj = client.get_object(Bucket=bucket_name, Key='trading-dashboard-data/purchase_info.csv')
-        transaction_body = transaction_obj['Body']
-        transaction_csv_string = transaction_body.read().decode('utf-8')
+    transaction_obj = client.get_object(Bucket=bucket_name, Key='trading-dashboard-data/purchase_info.csv')
+    transaction_body = transaction_obj['Body']
+    transaction_csv_string = transaction_body.read().decode('utf-8')
 
-        portfolio_obj = client.get_object(Bucket=bucket_name, Key='trading-dashboard-data/portfolio_returns.csv')
-        portfolio_body = portfolio_obj['Body']
-        portfolio_csv_string = portfolio_body.read().decode('utf-8')
+    portfolio_obj = client.get_object(Bucket=bucket_name, Key='trading-dashboard-data/portfolio_returns.csv')
+    portfolio_body = portfolio_obj['Body']
+    portfolio_csv_string = portfolio_body.read().decode('utf-8')
 
-        transaction_data = pd.read_csv(StringIO(transaction_csv_string))
-        portfolio_return = pd.read_csv(StringIO(portfolio_csv_string))
-        print(portfolio_return.columns)
-        realtime_dashboard(portfolio_return,transaction_data)
-        time.sleep(60)
+    transaction_data = pd.read_csv(StringIO(transaction_csv_string))
+    portfolio_return = pd.read_csv(StringIO(portfolio_csv_string))
+    print(portfolio_return.columns)
+    realtime_dashboard(portfolio_return,transaction_data)
+    time.sleep(60)
 
 #backtest dashboard
 if selected == "Backtesting":

@@ -18,9 +18,6 @@ def realtime_dashboard(portfolio_value, transactions):
     #single element container
     placeholder = st.empty()
 
-
-
-
     day_return =  portfolio_value['daily_return'].iloc[-1]
     week_return =  portfolio_value['weekly_return'].iloc[-1]
     month_return =  portfolio_value['monthly_return'].iloc[-1]
