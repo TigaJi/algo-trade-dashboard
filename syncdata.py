@@ -47,9 +47,9 @@ def calculate_returns(df):
 def sync_data():
     df = pd.read_csv("purchase_info.csv")
     df.to_csv("s3://research-dashboard/trading-dashboard-data/purchase_info.csv",
-          storage_options={'key': 'AKIATHGO3RS3C7EMIAU4',
-                           'secret': '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'})
+          storage_options={'key': st.secret['access_key'],
+                           'secret': st.secret['access_secret']})
     rets = calculate_returns(df)
     rets.to_csv("s3://research-dashboard/trading-dashboard-data/portfolio_returns.csv",
-          storage_options={'key': 'AKIATHGO3RS3C7EMIAU4',
-                           'secret': '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'})
+           storage_options={'key': st.secret['access_key'],
+                           'secret': st.secret['access_secret']})
