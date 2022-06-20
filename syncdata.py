@@ -3,6 +3,7 @@ import pandas as pd
 import sys
 import s3fs
 from io import StringIO
+import streamlit as st
 
 def calculate_returns(df):
     df['return'] = (df['stock_price_usd']-df['stock_price_usd'].shift(1))/df['stock_price_usd'].shift(1)
@@ -48,8 +49,8 @@ def sync_data():
     df = pd.read_csv("purchase_info.csv")
     df.to_csv("s3://research-dashboard/trading-dashboard-data/purchase_info.csv",
           storage_options={'key': st.secret['access_key'],
-                           'secret': st.secret['access_secret']})
+                           'secret': st.secrets['access_secret']})
     rets = calculate_returns(df)
     rets.to_csv("s3://research-dashboard/trading-dashboard-data/portfolio_returns.csv",
            storage_options={'key': st.secret['access_key'],
-                           'secret': st.secret['access_secret']})
+                           'secret': st.secrets['access_secret']})

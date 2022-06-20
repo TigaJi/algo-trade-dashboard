@@ -11,8 +11,8 @@ import boto3
 from io import StringIO
 
 
-client = boto3.client('s3', aws_access_key_id='AKIATHGO3RS3C7EMIAU4',
-        aws_secret_access_key='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')
+client = boto3.client('s3', aws_access_key_id=st.secrets['access_key'],
+        aws_secret_access_key=st.secrets['access_secret'])
 bucket_name = 'research-dashboard'
 
 
