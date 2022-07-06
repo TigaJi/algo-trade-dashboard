@@ -6,6 +6,7 @@ import time
 import plotly.express as px
 from backtest import backtest_dashboard
 from realtime import realtime_dashboard
+from portfoliobacktest import portfolio_backtest_dashboard
 from datapath import *
 import boto3
 from io import StringIO
@@ -28,7 +29,7 @@ st.set_page_config(
 with st.sidebar:
     selected = option_menu(
         menu_title = "Select a Dashboard",
-        options = ['Real-Time','Backtesting']
+        options = ['Real-Time',"Portfolio Backtest"]
     )
 
 
@@ -50,8 +51,16 @@ if selected == "Real-Time":
     
 
 #backtest dashboard
-if selected == "Backtesting":
-    st.write(backtest_data_path)
-    backtest_dashboard(backtest_data_path)
+#if selected == "Portfolio Backtest":
+#    st.write(backtest_data_path)
+#    backtest_dashboard(backtest_data_path)
+
+if selected == "Portfolio Backtest":
+    backtest_obj = client.get_object(Bucket=bucket_name, Key='trading-dashboard-data/portfolio_backtest_result.csv')
+    backtest_body = backtest_obj['Body']
+    backtest_csv_string = backtest_body.read().decode('utf-8')
+    backtest_data = pd.read_csv(StringIO(backtest_csv_string))
+
+    portfolio_backtest_dashboard(backtest_data)
 
    
