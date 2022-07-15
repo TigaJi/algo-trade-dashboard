@@ -21,7 +21,7 @@ def portfolio_backtest_dashboard(portfolio_result):
         st.text("")
 
         st.markdown("### Daily Backtest Result")
-        fig = px.line(portfolio_result,y=["exp3","bah","crp"],showlegend = True)
+        fig = px.line(portfolio_result,y=["exp3","bah","crp"])
         st.plotly_chart(fig, use_container_width=True)
 
 
