@@ -12,6 +12,9 @@ import boto3
 from io import StringIO
 
 
+#client = boto3.client('s3', aws_access_key_id=st.secrets['access_key'],
+        #aws_secret_access_key=st.secrets['access_secret'])
+
 client = boto3.client('s3', aws_access_key_id=st.secrets['access_key'],
         aws_secret_access_key=st.secrets['access_secret'])
 bucket_name = 'research-dashboard-2'
@@ -60,7 +63,7 @@ if selected == "Portfolio Backtest":
     backtest_body = backtest_obj['Body']
     backtest_csv_string = backtest_body.read().decode('utf-8')
     backtest_data = pd.read_csv(StringIO(backtest_csv_string))
-
+    print(backtest_data.columns)
     portfolio_backtest_dashboard(backtest_data)
 
    
