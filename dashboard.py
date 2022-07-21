@@ -1,4 +1,6 @@
 import streamlit as st
+from pydrive.auth import GoogleAuth
+from pydrive.drive import GoogleDrive
 from streamlit_option_menu import option_menu
 import pandas as pd 
 import numpy as numpy
@@ -7,17 +9,27 @@ import plotly.express as px
 from backtest import backtest_dashboard
 from realtime import realtime_dashboard
 from portfoliobacktest import portfolio_backtest_dashboard
-from datapath import *
-import boto3
-from io import StringIO
+from oauth2client.service_account import ServiceAccountCredentials
 
 
-#client = boto3.client('s3', aws_access_key_id=st.secrets['access_key'],
-        #aws_secret_access_key=st.secrets['access_secret'])
 
-client = boto3.client('s3', aws_access_key_id=st.secrets['access_key'],
-        aws_secret_access_key=st.secrets['access_secret'])
-bucket_name = 'research-dashboard-2'
+gauth = GoogleAuth()
+scope = ['https://www.googleapis.com/auth/drive.file',
+    'https://www.googleapis.com/auth/drive',
+    'https://www.googleapis.com/auth/drive.file',
+    'https://www.googleapis.com/auth/drive.metadata'
+  ]
+
+gauth.credentials = ServiceAccountCredentials.from_json_keyfile_name("algo-trade-dashboard-80cae071e907.json", scope)
+drive = GoogleDrive(gauth)
+
+
+
+f1 = drive.CreateFile({'id': "1CrpCQLa3iO_8TIMDzWu3Sa0JLX93KPCW"})
+f1.GetContentFile('purchase_info.csv')
+
+f2 = drive.CreateFile({'id':'1GeheRrBIXGOOK8Uqj5I6sAjNTC2BYlTf'})
+f2.GetContentFile("portfolio_returns.csv")
 
 
 #page config
@@ -39,16 +51,9 @@ with st.sidebar:
 
 #real time dashboard
 if selected == "Real-Time":
-    transaction_obj = client.get_object(Bucket=bucket_name, Key='trading-dashboard-data/purchase_info.csv')
-    transaction_body = transaction_obj['Body']
-    transaction_csv_string = transaction_body.read().decode('utf-8')
 
-    portfolio_obj = client.get_object(Bucket=bucket_name, Key='trading-dashboard-data/portfolio_returns.csv')
-    portfolio_body = portfolio_obj['Body']
-    portfolio_csv_string = portfolio_body.read().decode('utf-8')
-
-    transaction_data = pd.read_csv(StringIO(transaction_csv_string))
-    portfolio_return = pd.read_csv(StringIO(portfolio_csv_string))
+    transaction_data = pd.read_csv("purchase_info.csv")
+    portfolio_return = pd.read_csv("portfolio_returns.csv")
     
     realtime_dashboard(portfolio_return,transaction_data)
     

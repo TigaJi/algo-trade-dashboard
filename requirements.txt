@@ -3,4 +3,5 @@ pandas
 plotly.express
 streamlit
 streamlit_option_menu
-boto3
+oauth2client.service_account
+streamlit
