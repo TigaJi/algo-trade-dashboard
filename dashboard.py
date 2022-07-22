@@ -31,6 +31,10 @@ f1.GetContentFile('purchase_info.csv')
 f2 = drive.CreateFile({'id':'1GeheRrBIXGOOK8Uqj5I6sAjNTC2BYlTf'})
 f2.GetContentFile("portfolio_returns.csv")
 
+f3 = drive.CreateFile({'id':'1V7RcSGANiAp31-B6yUU5VBtlKYprnW0I'})
+f3.GetContentFile("portfolio_backtest_result.csv")
+
+
 
 #page config
 st.set_page_config(
@@ -64,11 +68,7 @@ if selected == "Real-Time":
 #    backtest_dashboard(backtest_data_path)
 
 if selected == "Portfolio Backtest":
-    backtest_obj = client.get_object(Bucket=bucket_name, Key='trading-dashboard-data/portfolio_backtest_result.csv')
-    backtest_body = backtest_obj['Body']
-    backtest_csv_string = backtest_body.read().decode('utf-8')
-    backtest_data = pd.read_csv(StringIO(backtest_csv_string))
-    print(backtest_data.columns)
+    backtest_data = pd.read_csv("portfolio_backtest_result.csv")
     portfolio_backtest_dashboard(backtest_data)
 
    
