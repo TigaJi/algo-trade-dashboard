@@ -2,7 +2,9 @@ import streamlit as st
 import pandas as pd 
 import numpy as numpy
 import time
-import plotly.express as px
+#import plotly.express as px
+import plotly
+#import plotly.graph_objects as go
 #a function to format the transaction data
 #extract data and kept only recent 5 transcations
 #rename columns for better format
@@ -41,7 +43,20 @@ def realtime_dashboard(portfolio_value, transactions):
 
 
         st.markdown("### Portfolio " + graph_filter)
-        fig = px.line(portfolio_value[-100:],y=graph_filter)
+        
+
+        x = list(portfolio_value['dt'].values)[-100:]
+        y = list(portfolio_value[graph_filter].values)[-100:]
+
+        layout = plotly.graph_objs.Layout(xaxis={'type': 'category',
+                                                 'dtick': 5})
+
+        data = plotly.graph_objs.Line(x=x, y=y)
+
+        fig = plotly.graph_objs.Figure([data], layout)
+
+        fig.update_xaxes(tickangle= -45)  
+        #fig = px.line(portfolio_value[-100:],x = 'x', y=graph_filter)
         st.plotly_chart(fig, use_container_width=True)
 
         box1,box2 = st.columns(2)
