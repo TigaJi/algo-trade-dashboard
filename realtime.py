@@ -1,6 +1,7 @@
 import streamlit as st
 import pandas as pd 
 import numpy as numpy
+import datetime
 import time
 #import plotly.express as px
 import plotly
@@ -15,6 +16,21 @@ def realtime_dashboard(portfolio_value, transactions):
     st.markdown("<h1 style='text-align: center;'>Real Time Results</h1>", unsafe_allow_html=True)
     st.text("Last update on: "+transactions['date'].iloc[-1])
     graph_filter = st.selectbox("Select Graph",['profit_sum','return'])
+
+    
+    date_range = pd.to_datetime(portfolio_value['dt']).dt.to_pydatetime()
+    date_range = [i.date() for i in date_range]
+    date_range = list(set(date_range))
+    start = date_range[0]
+    end = date_range[-1]
+
+    portfolio_value['dt1'] = pd.to_datetime(portfolio_value['dt']).dt.date
+    
+    values = st.slider(
+     'Select a range of values',
+    value = (start, end))
+
+    
     
     #hide index
     hide_table_row_index = """
@@ -43,13 +59,13 @@ def realtime_dashboard(portfolio_value, transactions):
 
 
         st.markdown("### Portfolio " + graph_filter)
-        
+    
+        x = portfolio_value.loc[(portfolio_value['dt1']>values[0]) & (portfolio_value['dt1']<values[1])]['dt'].values
+        y = portfolio_value.loc[(portfolio_value['dt1']>values[0]) & (portfolio_value['dt1']<values[1])][graph_filter].values
 
-        x = list(portfolio_value['dt'].values)[-100:]
-        y = list(portfolio_value[graph_filter].values)[-100:]
 
         layout = plotly.graph_objs.Layout(xaxis={'type': 'category',
-                                                 'dtick': 5})
+                                                 'dtick': len(x)/20})
 
         data = plotly.graph_objs.Line(x=x, y=y)
 

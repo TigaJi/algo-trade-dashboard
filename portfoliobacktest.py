@@ -2,9 +2,11 @@
 import streamlit as st
 import pandas as pd
 import plotly.express as px
+import plotly
 
 def portfolio_backtest_dashboard(portfolio_result):
 
+    print(portfolio_result[100:110])
     st.markdown("<h1 style='text-align: center;'>Portfolio Backtest Results</h1>", unsafe_allow_html=True)
 
 
@@ -21,8 +23,23 @@ def portfolio_backtest_dashboard(portfolio_result):
         st.text("")
 
         st.markdown("### Daily Backtest Result")
-        fig = px.line(portfolio_result,y=["exp3","bah","crp"])
+
+        x = list(portfolio_result['dt'].values)
+        #y = list(portfolio_value[graph_filter].values)[-100:]
+
+        layout = plotly.graph_objs.Layout(xaxis={'type': 'category',
+                                                 'dtick': 5})
+
+        data = plotly.graph_objs.Line(x=x, y=portfolio_result[["exp3","bah","crp"]])
+
+        fig = plotly.graph_objs.Figure([data], layout)
+
+        fig.update_xaxes(tickangle= -45)  
+        #fig = px.line(portfolio_value[-100:],x = 'x', y=graph_filter)
         st.plotly_chart(fig, use_container_width=True)
+
+        
+       
 
 
 
