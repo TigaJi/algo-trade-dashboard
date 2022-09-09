@@ -27,7 +27,7 @@ def realtime_dashboard(portfolio_value, transactions):
     portfolio_value['dt1'] = pd.to_datetime(portfolio_value['dt']).dt.date
     
     values = st.slider(
-     'Select a range of values',
+     'Select a range of date',min_value = start, max_value = end,
     value = (start, end))
 
     
