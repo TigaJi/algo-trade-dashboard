@@ -21,8 +21,8 @@ def realtime_dashboard(portfolio_value, transactions):
     date_range = pd.to_datetime(portfolio_value['dt']).dt.to_pydatetime()
     date_range = [i.date() for i in date_range]
     date_range = list(set(date_range))
-    start = date_range[0]
-    end = date_range[-1]
+    start = min(date_range)
+    end = max(date_range)
 
     portfolio_value['dt1'] = pd.to_datetime(portfolio_value['dt']).dt.date
     
