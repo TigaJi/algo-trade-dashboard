@@ -4,9 +4,57 @@ import pandas as pd
 import plotly.express as px
 import plotly
 
-def portfolio_backtest_dashboard(portfolio_result):
 
-    print(portfolio_result[100:110])
+def portfolio_backtest_dashboard(drive):
+
+    st.markdown("<h1 style='text-align: center;'>Strategy Backtest Results</h1>", unsafe_allow_html=True)
+
+    #list of files
+    file_list = drive.ListFile({'q': "'root' in parents and trashed=false"}).GetList()
+
+    res_dict = {}
+    res_list = []
+    for file in file_list: 
+        if "_backtest_result.csv" in file['title']:
+            res_list.append(file['title'])
+            res_dict[file['title']] = file['id']
+    
+    strategy = st.selectbox("Select Strategy",res_list)
+
+    placeholder = st.empty()
+    with placeholder.container():
+        f = drive.CreateFile({'id': res_dict[strategy]})
+        f.GetContentFile(strategy)
+
+        df = pd.read_csv(strategy)
+
+        x = df['dt']
+        values = df['total_value']
+        bah = df['bah']
+
+        layout = plotly.graph_objs.Layout(xaxis={'type': 'category',
+                                                 'dtick': len(x)/20})
+
+        fig = plotly.graph_objects.Figure(layout = layout)
+
+        fig.add_trace(plotly.graph_objects.Scatter(x=x, y=values,
+                    mode='lines',
+                    name=strategy))
+
+        fig.add_trace(plotly.graph_objects.Scatter(x=x, y=bah,
+                    mode='lines',
+                    name='Buy and hold'))
+        
+        fig.update_xaxes(tickangle= -45)  
+
+        st.plotly_chart(fig, use_container_width=True)
+
+
+            
+
+
+    
+    '''
     st.markdown("<h1 style='text-align: center;'>Portfolio Backtest Results</h1>", unsafe_allow_html=True)
 
 
@@ -45,4 +93,4 @@ def portfolio_backtest_dashboard(portfolio_result):
 
 
 
-
+'''
