@@ -24,10 +24,23 @@ def portfolio_backtest_dashboard(drive):
 
     placeholder = st.empty()
     with placeholder.container():
+
+
+       
+
+
+
+
         f = drive.CreateFile({'id': res_dict[strategy]})
         f.GetContentFile(strategy)
 
         df = pd.read_csv(strategy)
+
+        ret = (df['total_value'].values[-1]-df['total_value'].values[0])/df['total_value'].values[0]
+        m1,m2 = st.columns(2)
+        
+        m1.metric(label="return", value = ret)
+
 
         x = df['dt']
         values = df['total_value']
