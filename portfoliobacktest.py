@@ -16,8 +16,9 @@ def portfolio_backtest_dashboard(drive):
     res_list = []
     for file in file_list: 
         if "_backtest_result.csv" in file['title']:
-            res_list.append(file['title'])
-            res_dict[file['title']] = file['id']
+            title = file['title'][:-20]
+            res_list.append(title)
+            res_dict[title] = file['id']
     
     strategy = st.selectbox("Select Strategy",res_list)
 
