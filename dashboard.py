@@ -32,9 +32,6 @@ f2 = drive.CreateFile({'id':'1GeheRrBIXGOOK8Uqj5I6sAjNTC2BYlTf'})
 f2.GetContentFile("portfolio_returns.csv")
 
 
-f3 = drive.CreateFile({'id':'1V7RcSGANiAp31-B6yUU5VBtlKYprnW0I'})
-f3.GetContentFile("portfolio_backtest_result.csv")
-
 
 
 #page config
