@@ -25,21 +25,17 @@ def portfolio_backtest_dashboard(drive):
     placeholder = st.empty()
     with placeholder.container():
 
-
-       
-
-
-
-
         f = drive.CreateFile({'id': res_dict[strategy]})
         f.GetContentFile(strategy)
 
         df = pd.read_csv(strategy)
 
         ret = (df['total_value'].values[-1]-df['total_value'].values[0])/df['total_value'].values[0]
+        bah_ret = (df['bah'].values[-1]-df['bah'].values[0])/df['bah'].values[0]
         m1,m2 = st.columns(2)
         
-        m1.metric(label="return", value = ret)
+        m1.metric(label="return", value = round(ret,4))
+        m2.metric(label='bah return', value = round(bah_ret,4))
 
 
         x = df['dt']
@@ -65,46 +61,3 @@ def portfolio_backtest_dashboard(drive):
 
 
             
-
-
-    
-    '''
-    st.markdown("<h1 style='text-align: center;'>Portfolio Backtest Results</h1>", unsafe_allow_html=True)
-
-
-    placeholder = st.empty()
-
-    with placeholder.container():
-        
-        m1,m2,m3 = st.columns(3)
-
-        m1.metric(label="EXP3", value=round((float(portfolio_result['exp3'].iloc[-1])-10000)/10000,4))
-        m2.metric(label="BAH", value=round((float(portfolio_result['bah'].iloc[-1])-10000)/10000,4))
-        m3.metric(label="CRP", value=round((float(portfolio_result['crp'].iloc[-1])-10000)/10000,4))
-
-        st.text("")
-
-        st.markdown("### Daily Backtest Result")
-
-        x = list(portfolio_result['dt'].values)
-        #y = list(portfolio_value[graph_filter].values)[-100:]
-
-        layout = plotly.graph_objs.Layout(xaxis={'type': 'category',
-                                                 'dtick': 5})
-
-        data = plotly.graph_objs.Line(x=x, y=portfolio_result[["exp3","bah","crp"]])
-
-        fig = plotly.graph_objs.Figure([data], layout)
-
-        fig.update_xaxes(tickangle= -45)  
-        #fig = px.line(portfolio_value[-100:],x = 'x', y=graph_filter)
-        st.plotly_chart(fig, use_container_width=True)
-
-        
-       
-
-
-
-
-
-'''

@@ -60,8 +60,8 @@ def realtime_dashboard(portfolio_value, transactions):
 
         st.markdown("### Portfolio " + graph_filter)
     
-        x = portfolio_value.loc[(portfolio_value['dt1']>values[0]) & (portfolio_value['dt1']<values[1])]['dt'].values
-        y = portfolio_value.loc[(portfolio_value['dt1']>values[0]) & (portfolio_value['dt1']<values[1])][graph_filter].values
+        x = portfolio_value.loc[(portfolio_value['dt1']>=values[0]) & (portfolio_value['dt1']<=values[1])]['dt'].values
+        y = portfolio_value.loc[(portfolio_value['dt1']>=values[0]) & (portfolio_value['dt1']<=values[1])][graph_filter].values
 
 
         layout = plotly.graph_objs.Layout(xaxis={'type': 'category',
